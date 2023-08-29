@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import voting
 
 bot = commands.Bot(command_prefix="uno!", intents = discord.Intents.all())
 
@@ -16,7 +17,6 @@ async def on_ready():
         print(f"Synched {len(synced)} command(s)")
     except Exception as e:
         print(e)
-    
 
 @bot.event
 async def on_message(message):
@@ -32,4 +32,10 @@ async def on_message(message):
 async def slash_command(interaction: discord.Interaction, thing_to_say: str):    
     await interaction.response.send_message(thing_to_say)
 
+# make the slash command
+@bot.tree.command(name="vote")
+@app_commands.describe(poll = "poll",vote = "game", score = "your points")
+async def slash_command(interaction: discord.Interaction, vote: str, score:int, poll:str):    
+    await voting.vote(interaction, gameName=vote, points=score, chosenPoll=poll)
+    
 bot.run(token=key)
