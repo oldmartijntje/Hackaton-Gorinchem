@@ -1,0 +1,20 @@
+{
+    "testServerId": {
+        "admins": [],
+        "votes": {
+            "@henkHisUserId": {
+                "vote1": "minecraft",
+                "vote2": "gayshitInfect",
+                "vote3": "mario"
+            }
+        },
+        "gameList": [
+            "minecraft",
+            "gayshitInfect",
+            "mario"
+        ],
+        "reference": {
+            "genshin": "gayshitInfect"
+        }
+    }
+}
