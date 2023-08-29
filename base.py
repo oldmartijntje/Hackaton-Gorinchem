@@ -1,23 +1,35 @@
 import discord
+from discord.ext import commands
+from discord import app_commands
 
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix="uno!", intents = discord.Intents.all())
 
 keyFile = open("secrets.txt", "r")
 key = keyFile.read()
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {bot.user}')
+    print("bot is Up and Ready!")
+    try:
+        synced = await bot.tree.sync()
+        print(f"Synched {len(synced)} command(s)")
+    except Exception as e:
+        print(e)
+    
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+        await message.channel.send('Hello World!')
 
-client.run(key)
+# make the slash command
+@bot.tree.command(name="say")
+@app_commands.describe(thing_to_say = "what should i say?")
+async def slash_command(interaction: discord.Interaction, thing_to_say: str):    
+    await interaction.response.send_message(thing_to_say)
+
+bot.run(token=key)
