@@ -11,12 +11,12 @@
             "henk": {
                 "votes": {
                     "mielesgames": {
-                        "1point": "Minecraft",
+                        "1points": "Minecraft",
                         "2points": "New Super Mario Bros Wii",
                         "3points": "Mario Galaxy"
                     },
                     "jurrian_": {
-                        "1point": "Karel",
+                        "1points": "Karel",
                         "2points": "",
                         "3points": ""
                     }
@@ -40,7 +40,7 @@
             "137fab13-a668-4a03-bce5-3b2871bd67e2": {
                 "votes": {
                     "mielesgames": {
-                        "1point": "",
+                        "1points": "",
                         "2points": "",
                         "3points": "Bendy and the ink machine"
                     }

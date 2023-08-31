@@ -17,14 +17,9 @@ async def vote(interaction, gameName, points, chosenPoll):
                 poll = data[str(interaction.guild_id)]["polls"][chosenPoll]
                 votes = poll["votes"]
                 if not str(interaction.user.name) in votes:
-                    votes[interaction.user.name] = {"1point": "", "2points": "", "3points": ""}
-
-                if points == 1:
-                    votes[interaction.user.name]["1point"] = gameName
-                elif points == 2:
-                    votes[interaction.user.name]["2points"] = gameName
-                else:
-                    votes[interaction.user.name]["3points"] = gameName
+                    votes[interaction.user.name] = {"1points": "", "2points": "", "3points": ""}
+                    
+                votes[interaction.user.name][f"{points}points"] = gameName
 
                 data_handling.saveData(data)
             else:
