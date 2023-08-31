@@ -1,0 +1,40 @@
+{
+    "1041027064620388484": {
+        "admins": [],
+        "polls": {
+            "13c59b1c-ce95-41e1-9b57-d02c1af5fd19": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "henk": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "owo": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "20d5c71d-45e7-45ab-b08f-7a6f8e940b0a": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "137fab13-a668-4a03-bce5-3b2871bd67e2": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            }
+        },
+        "reference": {
+            "genshin": "gayshitInfect"
+        }
+    }
+}
