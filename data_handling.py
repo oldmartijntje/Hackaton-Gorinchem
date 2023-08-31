@@ -119,7 +119,7 @@ def addPollToData(interaction: discord.Interaction, name: str):
             },
             "gameList": [       
             ],
-            "phase": "voting"}
+            "phase": "adding"}
     user_name = str(interaction.user.name)
     defaultPoll["madeBy"] = user_name
     server_id = str(interaction.guild_id)
