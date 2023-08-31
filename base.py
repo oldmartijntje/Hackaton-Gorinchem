@@ -37,7 +37,7 @@ async def slash_command(interaction: discord.Interaction, thing_to_say: str):
 # make the slash command
 @bot.tree.command(name="vote")
 @app_commands.describe(poll = "poll",vote = "game", score = "your points")
-async def slash_command(interaction: discord.Interaction, vote: str, score:int, poll:str):    
+async def slash_command(interaction: discord.Interaction, vote: str, score:int, poll:str):
     await voting.vote(interaction, gameName=vote, points=score, chosenPoll=poll)
     
 @bot.tree.command(name="testdatahandling")

@@ -18,8 +18,10 @@ async def vote(interaction, gameName, points, chosenPoll):
                 votes = poll["votes"]
                 if not str(interaction.user.name) in votes:
                     votes[interaction.user.name] = {"1points": "", "2points": "", "3points": ""}
-                    
-                votes[interaction.user.name][f"{points}points"] = gameName
+                if gameName in poll["gameList"]:
+                    votes[interaction.user.name][f"{points}points"] = gameName
+                else:
+                    await interaction.response.send_message(f"Sorry <@{interaction.user.id}>, but {gameName}, is not a valid option for this poll.")
 
                 data_handling.saveData(data)
             else:
