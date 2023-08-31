@@ -48,4 +48,9 @@ async def startVote(interaction: discord.Interaction, vote_name: str = ''):
     print(interaction.user.guild_permissions.administrator)
     await admin.test(interaction, vote_name)
 
+@bot.tree.command(name="getpolllist")
+async def get_poll_list(interaction: discord.Interaction):
+    poll_list = data_handling.get_poll_list(interaction)
+    await interaction.response.send_message(poll_list)
+
 bot.run(token=key)

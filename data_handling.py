@@ -35,6 +35,21 @@ def person_rights(interaction: discord.Interaction):
         print(e)
         return False
 
+def get_poll_list(interaction: discord.Interaction):
+    try:
+        data = getData()
+        polls = data[str(interaction.guild_id)]["polls"]
+        prettified_poll_list = ''
+        for poll in polls:
+            prettified_poll_list += '\n- ' + poll
+        if len(prettified_poll_list) == 0:
+            return 'There are currently no polls available.'
+        else:
+            return prettified_poll_list
+    except Exception as e:
+        print(e)
+        return {}
+
 def user_is_admin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
