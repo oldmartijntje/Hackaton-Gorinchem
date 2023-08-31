@@ -45,7 +45,6 @@ async def slash_command(interaction: discord.Interaction, thing_to_say: str):
 @bot.tree.command(name="start_vote")
 @app_commands.describe(vote_name = "What is the name of the vote?")
 async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
-    print(interaction.user.guild_permissions.administrator)
     await admin.test(interaction, vote_name)
 
 bot.run(token=key)
