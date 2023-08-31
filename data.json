@@ -1,23 +1,22 @@
 {
-    "testServerId": {
+    "1041027064620388484": {
         "admins": [],
-        "voteName": {
-            "votes": {
-                "@henkHisUserId": {
-                    "vote1": "minecraft",
-                    "vote2": "gayshitInfect",
-                    "vote3": "mario"
-                }
+        "polls": {
+            "13c59b1c-ce95-41e1-9b57-d02c1af5fd19": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
             },
-            "gameList": [
-                "minecraft",
-                "gayshitInfect",
-                "mario"
-            ],
-            "reference": {
-                "genshin": "gayshitInfect"
-            },
-            "phase": "voting"
+            "henk": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            }
+        },
+        "reference": {
+            "genshin": "gayshitInfect"
         }
     }
 }
