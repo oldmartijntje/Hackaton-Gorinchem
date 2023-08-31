@@ -1,23 +1,9 @@
 {
-    "testServerId": {
+    "1041027064620388484": {
         "admins": [],
-        "voteName": {
-            "votes": {
-                "@henkHisUserId": {
-                    "vote1": "minecraft",
-                    "vote2": "gayshitInfect",
-                    "vote3": "mario"
-                }
-            },
-            "gameList": [
-                "minecraft",
-                "gayshitInfect",
-                "mario"
-            ],
-            "reference": {
-                "genshin": "gayshitInfect"
-            },
-            "phase": "voting"
+        "polls": {},
+        "reference": {
+            "genshin": "gayshitInfect"
         }
     }
 }
