@@ -4,30 +4,17 @@ import discord
 
 def create_server(interaction: discord.Interaction):
     try:
-        server_id = interaction.guild_id
+        server_id = str(interaction.guild_id)
         new_server_content = {
                 "admins": [],
-                "voteName": {
-                    "votes": {
-                        "@henkHisUserId": {
-                            "vote1": "minecraft",
-                            "vote2": "gayshitInfect",
-                            "vote3": "mario"
-                        }
-                    },
-                    "gameList": [
-                        "minecraft",
-                        "gayshitInfect",
-                        "mario"
-                    ],
-                    "reference": {
-                        "genshin": "gayshitInfect"
-                    },
-                    "phase": "voting"
-                }
-        }
-        with open('data.json', 'w') as servers:
-            servers.write(json.dumps({server_id: new_server_content}, indent=4))
+                "polls": {},
+                "reference": {
+                    "genshin": "gayshitInfect"
+                },
+            }
+        servers = getData()
+        servers[server_id] = new_server_content
+        saveData(servers)
         return True
     except Exception as e:
         print(e)
@@ -35,12 +22,16 @@ def create_server(interaction: discord.Interaction):
 
 def user_is_admin(interaction: discord.Interaction):
     try:
-        server_id = interaction.guild_id
+        server_id = str(interaction.guild_id)
         user_name = interaction.user.name
         user_is_serveradmin = interaction.user.guild_permissions.administrator
         with open('data.json', 'r') as servers:
             server = json.loads(servers.read())
-            admins = json.loads(servers.read())[server_id]['admins']
+            if server_id in server:
+                admins = server[server_id]['admins']
+            else:
+                create_server(interaction)
+                admins = []
         user_is_botadmin = user_name in admins
         if user_is_serveradmin:
             return True
@@ -55,7 +46,7 @@ def user_is_admin(interaction: discord.Interaction):
 
 def add_botadmin(interaction: discord.Interaction):
     try:
-        server_id = interaction.guild_id
+        server_id = str(interaction.guild_id)
         user_name = interaction.user.name
         with open('data.json', 'r') as data:
             admins = json.loads(data.read())[server_id]['admins']
@@ -66,3 +57,36 @@ def add_botadmin(interaction: discord.Interaction):
             return True
     except Exception:
         return False
+    
+def addPollToData(interaction: discord.Interaction, name: str):
+    defaultPoll =  {"votes": { 
+            },
+            "gameList": [       
+            ],
+            "phase": "voting"}
+    user_name = str(interaction.user.name)
+    defaultPoll["madeBy"] =  user_name
+    server_id = str(interaction.guild_id)
+    server = getData()
+    if server_id in server and name in server[server_id]['polls']:
+        return False
+    else:
+        if server_id in server:
+            server[server_id]['polls'][name] = defaultPoll
+            saveData(server)
+            return True
+        else:
+            create_server(interaction)
+            server = getData()
+            server[server_id]['polls'][name] = defaultPoll
+            saveData(server)
+            return True
+            
+def getData():
+    with open('data.json', 'r') as data:
+        admins = json.loads(data.read())
+        return admins
+    
+def saveData(dataToSave):
+    with open("data.json", mode="w") as data:
+        data.write(json.dumps(dataToSave, indent=4))
