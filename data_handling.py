@@ -20,6 +20,21 @@ def create_server(interaction: discord.Interaction):
         print(e)
         return False
 
+def person_rights(interaction: discord.Interaction):
+    try:
+        user_is_serveradmin = interaction.user.guild_permissions.administrator
+        user_is_botadmin = False
+        server_id = str(interaction.guild_id)
+        user_name = interaction.user.name
+        servers = getData()
+        if server_id in servers:
+            admins = servers[server_id]['admins']
+            user_is_botadmin = user_name in admins
+        return [user_is_serveradmin, user_is_botadmin]
+    except Exception as e:
+        print(e)
+        return False
+
 def user_is_admin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
@@ -59,13 +74,13 @@ def add_botadmin(interaction: discord.Interaction):
         return False
     
 def addPollToData(interaction: discord.Interaction, name: str):
-    defaultPoll =  {"votes": { 
+    defaultPoll = {"votes": {
             },
             "gameList": [       
             ],
             "phase": "voting"}
     user_name = str(interaction.user.name)
-    defaultPoll["madeBy"] =  user_name
+    defaultPoll["madeBy"] = user_name
     server_id = str(interaction.guild_id)
     server = getData()
     if server_id in server and name in server[server_id]['polls']:
