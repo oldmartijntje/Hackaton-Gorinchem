@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 import data_handling
+import admin
+
 
 bot = commands.Bot(command_prefix="uno!", intents = discord.Intents.all())
 
@@ -33,10 +35,17 @@ async def on_message(message):
 async def slash_command(interaction: discord.Interaction, thing_to_say: str):    
     await interaction.response.send_message(thing_to_say)
 
+
 @bot.tree.command(name="testdatahandling")
 @app_commands.describe(thing_to_say="what should i say?")
 async def slash_command(interaction: discord.Interaction, thing_to_say: str):
     print(data_handling.user_is_admin(interaction))
     await interaction.response.send_message(thing_to_say)
+    
+@bot.tree.command(name="start_vote")
+@app_commands.describe(vote_name = "What is the name of the vote?")
+async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
+    print(interaction.user.guild_permissions.administrator)
+    await admin.test(interaction, vote_name)
 
 bot.run(token=key)
