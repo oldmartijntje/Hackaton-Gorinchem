@@ -51,4 +51,9 @@ async def slash_command(interaction: discord.Interaction, thing_to_say: str):
 async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
     await admin.test(interaction, vote_name)
 
+@bot.tree.command(name="getpolllist")
+async def get_poll_list(interaction: discord.Interaction):
+    poll_list = data_handling.get_poll_list(interaction)
+    await interaction.response.send_message(poll_list)
+
 bot.run(token=key)

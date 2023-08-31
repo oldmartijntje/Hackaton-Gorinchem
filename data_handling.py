@@ -20,6 +20,36 @@ def create_server(interaction: discord.Interaction):
         print(e)
         return False
 
+def person_rights(interaction: discord.Interaction):
+    try:
+        user_is_serveradmin = interaction.user.guild_permissions.administrator
+        user_is_botadmin = False
+        server_id = str(interaction.guild_id)
+        user_name = interaction.user.name
+        servers = getData()
+        if server_id in servers:
+            admins = servers[server_id]['admins']
+            user_is_botadmin = user_name in admins
+        return [user_is_serveradmin, user_is_botadmin]
+    except Exception as e:
+        print(e)
+        return False
+
+def get_poll_list(interaction: discord.Interaction):
+    try:
+        data = getData()
+        polls = data[str(interaction.guild_id)]["polls"]
+        prettified_poll_list = ''
+        for poll in polls:
+            prettified_poll_list += '\n- ' + poll
+        if len(prettified_poll_list) == 0:
+            return 'There are currently no polls available.'
+        else:
+            return prettified_poll_list
+    except Exception as e:
+        print(e)
+        return {}
+
 def user_is_admin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
@@ -48,24 +78,50 @@ def add_botadmin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
         user_name = interaction.user.name
-        with open('data.json', 'r') as data:
-            admins = json.loads(data.read())[server_id]['admins']
-        if user_name in admins:
-            return 'User is already admin'
+        data = getData()
+        if server_id in data:
+            admins = data[server_id]['admins']
+            if user_name in admins:
+                return 'User is already admin'
+            else:
+                admins.append(user_name)
+                saveData(data)
+                return True
         else:
-            admins.add(user_name)
+            create_server(interaction)
             return True
-    except Exception:
+    except Exception as e:
+        print(e)
+        return False
+
+def remove_botadmin(interaction: discord.Interaction):
+    try:
+        server_id = str(interaction.guild_id)
+        user_name = interaction.user.name
+        data = getData()
+        if server_id in data:
+            admins = data[server_id]['admins']
+            if user_name in admins:
+                admins.remove(user_name)
+                saveData(data)
+                return True
+            else:
+                return 'User was not an admin'
+        else:
+            create_server(interaction)
+            return True
+    except Exception as e:
+        print(e)
         return False
     
 def addPollToData(interaction: discord.Interaction, name: str):
-    defaultPoll =  {"votes": { 
+    defaultPoll = {"votes": {
             },
             "gameList": [       
             ],
             "phase": "voting"}
     user_name = str(interaction.user.name)
-    defaultPoll["madeBy"] =  user_name
+    defaultPoll["madeBy"] = user_name
     server_id = str(interaction.guild_id)
     server = getData()
     if server_id in server and name in server[server_id]['polls']:
