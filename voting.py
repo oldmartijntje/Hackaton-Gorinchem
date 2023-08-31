@@ -1,5 +1,5 @@
 import discord
-henk = {
+dataList = {
     "1041027064620388484": {
         "admins": [],
         "votes": {
@@ -15,14 +15,20 @@ henk = {
             "mario"
         ],
         "reference": {
-            "genshin": "gayshitInfect"
+            "genshin": "gayshitInfect",
+            "minceraft": "minecraft"
         },
         "phase": "voting"
     }
 }
 
 async def vote(interaction, gameName, points, chosenPoll):
+    if gameName in dataList[f"{interaction.guild_id}"]["reference"]:
+        gameName = dataList[f"{interaction.guild_id}"]["reference"][gameName]
     if points < 4 and points > 0:
-        await interaction.response.send_message(f"<@{interaction.user.id}> picked the game {gameName} for {points} points, in the poll {chosenPoll}.")
+        if points > 1:
+            await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** points, in **{chosenPoll}**.", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** point, in **{chosenPoll}**.", ephemeral=True)
     else:
-        await interaction.response.send_message(content="Invalid number, you can only pick a number between 1 and 3.", ephemeral=True)
+        await interaction.response.send_message(content="Invalid number, you can only pick a number between **1** and **3**.", ephemeral=True)
