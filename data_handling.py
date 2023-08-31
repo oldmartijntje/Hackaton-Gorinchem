@@ -42,7 +42,7 @@ def get_poll_list(interaction: discord.Interaction):
         prettified_poll_list = ''
         for poll in polls:
             prettified_poll_list += '\n- ' + poll
-        if len(prettified_poll_list) == 0:
+        if len(polls) == 0:
             return 'There are currently no polls available.'
         else:
             return prettified_poll_list

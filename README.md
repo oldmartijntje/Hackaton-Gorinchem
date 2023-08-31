@@ -19,7 +19,6 @@ je Vote op een Poll. Dus een vote is wat een persoon kiest. Een poll is het ding
 
 ## todo
 - in de getpolllist `command` kijken naar de state van elke poll, is ie al geclosed bijvoorbeeld? en of jouw stem daar ook tussen zit.
-- in de getpolllist `command`, als er geen poll is, staat er {} met de error: '1041027064620388484' in mn console
 - `command` om poll te verwijderen
 - `command` om poll informatie te krijgen, wie heeft gemaakt, hoeveel votes, waarop is gevote? Wat is de current winner.
 - `command` om poll naar stage `closed` te zetten
