@@ -1,23 +1,57 @@
 {
-    "testServerId": {
+    "1041027064620388484": {
         "admins": [],
-        "voteName": {
-            "votes": {
-                "@henkHisUserId": {
-                    "vote1": "minecraft",
-                    "vote2": "gayshitInfect",
-                    "vote3": "mario"
-                }
+        "polls": {
+            "13c59b1c-ce95-41e1-9b57-d02c1af5fd19": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
             },
-            "gameList": [
-                "minecraft",
-                "gayshitInfect",
-                "mario"
-            ],
-            "reference": {
-                "genshin": "gayshitInfect"
+            "henk": {
+                "votes": {
+                    "mielesgames": {
+                        "1points": "Minecraft",
+                        "2points": "New Super Mario Bros Wii",
+                        "3points": "Mario Galaxy"
+                    },
+                    "jurrian_": {
+                        "1points": "Karel",
+                        "2points": "",
+                        "3points": ""
+                    }
+                },
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
             },
-            "phase": "voting"
+            "owo": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "20d5c71d-45e7-45ab-b08f-7a6f8e940b0a": {
+                "votes": {},
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            },
+            "137fab13-a668-4a03-bce5-3b2871bd67e2": {
+                "votes": {
+                    "mielesgames": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": "Bendy and the ink machine"
+                    }
+                },
+                "gameList": [],
+                "phase": "voting",
+                "madeBy": "oldmartijntje"
+            }
+        },
+        "reference": {
+            "genshin": "gayshitInfect"
         }
     }
 }
