@@ -1,19 +1,27 @@
-import discord
 import json
+import data_handling
 
 async def vote(interaction, gameName, points, chosenPoll):
     with open("data.json", "r") as dataList:
         dataList = json.loads(dataList.read())
-    if interaction.guild_id in dataList:
+    if str(interaction.guild_id) in dataList:
         if gameName in dataList[f"{interaction.guild_id}"]["reference"]:
             gameName = dataList[f"{interaction.guild_id}"]["reference"][gameName]
         if points < 4 and points > 0:
-            with open("data.json", "w") as data:
+            if chosenPoll in dataList[f"{interaction.guild_id}"]["polls"]:
+                data = data_handling.getData()
                 if points > 1:
                     await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** points, in **{chosenPoll}**.", ephemeral=True)
                 else:
                     await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** point, in **{chosenPoll}**.", ephemeral=True)
+                
+                data_handling.saveData(data)
+            else:
+                await interaction.response.send_message(f"<@{interaction.user.id}> This poll does not exist, check if you made a typo.", ephemeral=True)
         else:
-            await interaction.response.send_message(content="Invalid number, you can only pick a number between **1** and **3**.", ephemeral=True)
+            if points == 69 or gameName == "69" or chosenPoll == "69":
+                await interaction.response.send_message("https://tenor.com/view/linus-you-funny-gif-21112056", ephemeral=True)
+            else:
+                await interaction.response.send_message(content="Invalid number, you can only pick a number between **1** and **3**.", ephemeral=True)
     else:
-        interaction.response.send_message("This server has not yet started a poll, please create one first.")
+        await interaction.response.send_message("This server has not yet started a poll, please create one first.", ephemeral=True)
