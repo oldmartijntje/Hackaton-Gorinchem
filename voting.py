@@ -14,10 +14,21 @@ async def vote(interaction, gameName, points, chosenPoll):
                     await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** points, in **{chosenPoll}**.", ephemeral=True)
                 else:
                     await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** point, in **{chosenPoll}**.", ephemeral=True)
-                
+                poll = data[str(interaction.guild_id)]["polls"][chosenPoll]
+                votes = poll["votes"]
+                if not str(interaction.user.name) in votes:
+                    votes[interaction.user.name] = {"1point": "", "2points": "", "3points": ""}
+
+                if points == 1:
+                    votes[interaction.user.name]["1point"] = gameName
+                elif points == 2:
+                    votes[interaction.user.name]["2points"] = gameName
+                else:
+                    votes[interaction.user.name]["3points"] = gameName
+
                 data_handling.saveData(data)
             else:
-                await interaction.response.send_message(f"<@{interaction.user.id}> This poll does not exist, check if you made a typo.", ephemeral=True)
+                await interaction.response.send_message(f"<@{interaction.user.id}> This poll does not exist, check if you made a typo and try again ;)", ephemeral=True)
         else:
             if points == 69 or gameName == "69" or chosenPoll == "69":
                 await interaction.response.send_message("https://tenor.com/view/linus-you-funny-gif-21112056", ephemeral=True)

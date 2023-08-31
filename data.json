@@ -9,7 +9,18 @@
                 "madeBy": "oldmartijntje"
             },
             "henk": {
-                "votes": {},
+                "votes": {
+                    "mielesgames": {
+                        "1point": "Minecraft",
+                        "2points": "New Super Mario Bros Wii",
+                        "3points": "Mario Galaxy"
+                    },
+                    "jurrian_": {
+                        "1point": "Karel",
+                        "2points": "",
+                        "3points": ""
+                    }
+                },
                 "gameList": [],
                 "phase": "voting",
                 "madeBy": "oldmartijntje"
@@ -27,7 +38,13 @@
                 "madeBy": "oldmartijntje"
             },
             "137fab13-a668-4a03-bce5-3b2871bd67e2": {
-                "votes": {},
+                "votes": {
+                    "mielesgames": {
+                        "1point": "",
+                        "2points": "",
+                        "3points": "Bendy and the ink machine"
+                    }
+                },
                 "gameList": [],
                 "phase": "voting",
                 "madeBy": "oldmartijntje"
