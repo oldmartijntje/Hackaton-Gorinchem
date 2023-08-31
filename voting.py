@@ -59,10 +59,57 @@ def checkBeforeReplacing(interaction: discord.Integration, votes, points):
     return votes
 
 def checkDuplicateGames(interaction: discord.Integration, votes, gameName):
-    for item in list(votes[interaction.user.name].keys()):
-        if votes[interaction.user.name][item] == gameName:
-            votes[interaction.user.name][item] = ""
-    return votes
+    if interaction.user.name in votes:
+        for item in list(votes[interaction.user.name].keys()):
+            if votes[interaction.user.name][item] == gameName:
+                votes[interaction.user.name][item] = ""
+        return votes
+    else: 
+        return votes
 
 async def getMyVotes(interaction: discord.Interaction, chosenPoll):
-    pass
+    server_id = str(interaction.guild_id)
+    data = data_handling.getData()
+    username = interaction.user.name
+    if chosenPoll == "":
+        if server_id not in data:
+            data_handling.create_server(interaction)
+            data = data_handling.getData()
+            await interaction.response.send_message(f"You have never voted in this discord server.", ephemeral=True)
+        else:
+            text = ''
+            for poll in list(data[server_id]["polls"].keys()):
+                if username in data[server_id]["polls"][poll]["votes"]:
+                    text += f"\nIn the `{poll}` poll:\n    "
+                    for x in range(3):
+                        if data[server_id]["polls"][poll]["votes"][username][f"{x + 1}points"] != "":
+                            text += f"{x + 1} points for {data[server_id]['polls'][poll]['votes'][username][f'{x + 1}points'] }. "
+                    if data[server_id]["polls"][poll]["phase"] != "closed":
+                        text += f"    📝changable📝"
+                    else:
+                        text += f"    🔒votes are locked🔒"
+            if text != '':
+                await interaction.response.send_message(f"You have voted:\n{text}", ephemeral=True)
+            else:
+                await interaction.response.send_message(f"Your votes are empty.", ephemeral=True)
+
+
+    else:
+        if server_id not in data:
+            data_handling.create_server(interaction)
+            data = data_handling.getData()
+            await interaction.response.send_message(f"Poll '{chosenPoll}' does not exist.", ephemeral=True)
+        elif chosenPoll in data[server_id]["polls"]:
+            if username in data[server_id]["polls"][chosenPoll]["votes"]:
+                text = ''
+                for x in range(3):
+                    if data[server_id]["polls"][chosenPoll]["votes"][username][f"{x + 1}points"] != "":
+                        text += f"{x + 1} points for {data[server_id]['polls'][chosenPoll]['votes'][username][f'{x + 1}points'] }. "
+                if text != '':
+                    await interaction.response.send_message(f"You have voted {text}", ephemeral=True)
+                else:
+                    await interaction.response.send_message(f"Your votes are empty.", ephemeral=True)
+            else:
+                await interaction.response.send_message(f"You have not participated in this poll.", ephemeral=True)
+        else:
+            await interaction.response.send_message(f"Poll '{chosenPoll}' does not exist.", ephemeral=True)

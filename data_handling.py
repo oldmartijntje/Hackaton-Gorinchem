@@ -139,6 +139,7 @@ def addPollToData(interaction: discord.Interaction, name: str):
             return True
             
 def getData():
+    checkIfExist()
     with open('data.json', 'r') as data:
         admins = json.loads(data.read())
         return admins
@@ -146,3 +147,9 @@ def getData():
 def saveData(dataToSave):
     with open("data.json", mode="w") as data:
         data.write(json.dumps(dataToSave, indent=4))
+
+def checkIfExist():
+    import os
+    if not os.path.isfile('data.json'):
+        with open("data.json", mode="w") as data:
+            data.write(json.dumps({}, indent=4))
