@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import voting
 import data_handling
 import admin
-
 
 bot = commands.Bot(command_prefix="uno!", intents = discord.Intents.all())
 
@@ -19,7 +19,6 @@ async def on_ready():
         print(f"Synched {len(synced)} command(s)")
     except Exception as e:
         print(e)
-    
 
 @bot.event
 async def on_message(message):
@@ -35,7 +34,12 @@ async def on_message(message):
 async def slash_command(interaction: discord.Interaction, thing_to_say: str):    
     await interaction.response.send_message(thing_to_say)
 
-
+# make the slash command
+@bot.tree.command(name="vote")
+@app_commands.describe(poll = "poll",vote = "game", score = "your points")
+async def slash_command(interaction: discord.Interaction, vote: str, score:int, poll:str):
+    await voting.vote(interaction, gameName=vote, points=score, chosenPoll=poll)
+    
 @bot.tree.command(name="testdatahandling")
 @app_commands.describe(thing_to_say="what should i say?")
 async def slash_command(interaction: discord.Interaction, thing_to_say: str):
@@ -45,7 +49,6 @@ async def slash_command(interaction: discord.Interaction, thing_to_say: str):
 @bot.tree.command(name="start_vote")
 @app_commands.describe(vote_name = "What is the name of the vote?")
 async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
-    print(interaction.user.guild_permissions.administrator)
     await admin.test(interaction, vote_name)
 
 @bot.tree.command(name="getpolllist")
