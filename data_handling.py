@@ -38,14 +38,20 @@ def person_rights(interaction: discord.Interaction):
 def get_poll_list(interaction: discord.Interaction):
     try:
         data = getData()
-        polls = data[str(interaction.guild_id)]["polls"]
-        prettified_poll_list = ''
-        for poll in polls:
-            prettified_poll_list += '\n- ' + poll
-        if len(polls) == 0:
-            return 'There are currently no polls available.'
+        server_id = str(interaction.guild_id)
+        if server_id in data:
+            polls = data[str(interaction.guild_id)]["polls"]
+            prettified_poll_list = ''
+            for poll in polls:
+                prettified_poll_list += '\n- ' + poll
+            if len(polls) == 0:
+                return 'There are currently no polls available.'
+            else:
+                return prettified_poll_list
         else:
-            return prettified_poll_list
+            create_server(interaction)
+            return 'There are currently no polls available.'
+        
     except Exception as e:
         print(e)
         return {}
