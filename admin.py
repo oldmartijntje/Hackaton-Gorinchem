@@ -12,3 +12,7 @@ async def test(interaction: discord.Interaction, vote_name):
             await interaction.response.send_message(f"The poll {vote_name} already exists!")
     else:
         await interaction.response.send_message(f"You don't have the rights to create a poll!")
+
+# jurrians code start
+
+# jurrians code einde

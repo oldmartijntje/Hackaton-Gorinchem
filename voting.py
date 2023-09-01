@@ -113,3 +113,7 @@ async def getMyVotes(interaction: discord.Interaction, chosenPoll):
                 await interaction.response.send_message(f"You have not participated in this poll.", ephemeral=True)
         else:
             await interaction.response.send_message(f"Poll '{chosenPoll}' does not exist.", ephemeral=True)
+
+# jurrians code start
+
+# jurrians code einde
