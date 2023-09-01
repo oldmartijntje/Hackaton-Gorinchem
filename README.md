@@ -25,9 +25,9 @@ je Vote op een Poll. Dus een vote is wat een persoon kiest. Een poll is het ding
     - `command` om poll naar stage `voting` te zetten
 - delete admin `command`
 - add admin `command` (using the already made function)
-- delete references `command`
-- see references list `command`
-- add references `command`
+    - delete references `command`
+    - see references list `command`
+    - add references `command`
 - see who the bot admins are `command`
 - see if someone is admin and what rights they have `command` (use the function that we already have for it)
 - optional: `command` die alleen de top 10% van de gevote games houdt om op te voten, en bij de rest de votes leegmaakt, dus iedereen die op mogus heeft gestemd zodra het afvalt, kan opnieuw stemmen.

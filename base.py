@@ -67,9 +67,27 @@ async def test_data_handling(interaction: discord.Interaction, thing_to_say: str
 async def startVote(interaction: discord.Interaction, poll_name: str = ''):  
     await admin.createPoll(interaction, poll_name)
 
+# emiels code hier
+@bot.tree.command(name="create_reference", description="Adds refference to the list")
+@app_commands.describe(detection = "Detected word", replacement = "Replacement")
+async def create(interaction: discord.Interaction, detection: str, replacement:str):
+    await admin.add_reference(interaction, detection, replacement)
+
+@bot.tree.command(name="remove_reference", description="Deletes refference from the list")
+@app_commands.describe(detection = "Detected word")
+async def remove(interaction: discord.Interaction, detection: str):
+    await admin.remove_reference(interaction, detection)
+
+@bot.tree.command(name="references_list", description="Shows you the list of references")
+async def showList(interaction: discord.Interaction):
+    await admin.display_references(interaction)
+
+# emiels code eindigt hier
+
 @bot.tree.command(name="get_poll_list", description="Get a list of all active polls")
 async def get_poll_list(interaction: discord.Interaction):
     poll_list = data_handling.get_poll_list(interaction)
     await interaction.response.send_message(poll_list)
+
 
 bot.run(token=key)

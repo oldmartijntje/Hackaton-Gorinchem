@@ -70,6 +70,9 @@ def checkDuplicateGames(interaction: discord.Integration, votes, gameName):
         return votes
     else: 
         return votes
+    
+# emiels code start hier
+# emiels code eindigt hier
 
 async def getMyVotes(interaction: discord.Interaction, chosenPoll):
     server_id = str(interaction.guild_id)
