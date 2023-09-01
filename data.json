@@ -1,0 +1,76 @@
+{
+    "1041027064620388484": {
+        "admins": [],
+        "polls": {
+            "50e3e846-81a0-4fe3-8567-5cc641c32285": {
+                "votes": {
+                    "oldmartijntje": {
+                        "1points": "henk",
+                        "2points": "meow",
+                        "3points": ""
+                    },
+                    "mielesgames": {
+                        "1points": "henk",
+                        "2points": "mario kart",
+                        "3points": "Super Mario Galaxy"
+                    },
+                    "onlyfans.nl": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": ""
+                    }
+                },
+                "gameList": [
+                    "henk",
+                    "meow",
+                    "Super Mario Galaxy",
+                    "mario kart"
+                ],
+                "phase": "closed",
+                "madeBy": "oldmartijntje"
+            },
+            "0a308e7f-b08f-4c59-9dac-4309a9d8579f": {
+                "votes": {
+                    "onlyfans.nl": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": "super mario maker"
+                    }
+                },
+                "gameList": [
+                    "super mario maker"
+                ],
+                "phase": "closed",
+                "madeBy": "oldmartijntje"
+            },
+            "3a85b7b5-980c-4d65-b40a-38d4b30f6709": {
+                "votes": {
+                    "onlyfans.nl": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": "meow"
+                    },
+                    "417406922384211969": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": ""
+                    }
+                },
+                "gameList": [
+                    "meow"
+                ],
+                "phase": "closed",
+                "madeBy": "oldmartijntje"
+            },
+            "henk": {
+                "votes": {},
+                "gameList": [],
+                "phase": "closed",
+                "madeBy": "417406922384211969"
+            }
+        },
+        "reference": {
+            "genshin": "gayshitInfect"
+        }
+    }
+}
