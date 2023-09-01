@@ -45,10 +45,15 @@ async def get_votes(interaction: discord.Interaction, chosen_poll: str = ""):
     await voting.getMyVotes(interaction, chosen_poll)
     
 # martijns code start hier
-@bot.tree.command(name="close_poll", description="Finish the poll and get the results.")
+@bot.tree.command(name="close_poll", description="Get info on a poll.")
 @app_commands.describe(poll = "Poll name")
 async def close_poll(interaction: discord.Interaction, poll: str):
     await admin.endPoll(interaction, poll)
+
+@bot.tree.command(name="poll_info", description="Finish the poll and get the results.")
+@app_commands.describe(poll = "Poll name")
+async def poll_info(interaction: discord.Interaction, poll: str):
+    await voting.poll_info(interaction, poll)
 
 @bot.tree.command(name="start_voting", description="Change it to voting phase.")
 @app_commands.describe(poll = "Poll name")
@@ -92,6 +97,20 @@ async def get_poll_list(interaction: discord.Interaction):
 
 
 # jurrians code start
+@bot.tree.command(name="help", description="Get a list of all commands")
+async def help(interaction: discord.Interaction):
+    help = '''
+    vote: Vote for a poll
+Get votes: See what you have voted for on a specific poll or server
+Start poll: Start a new poll
+Get poll list: Get a list of all active polls
+Add admin: Add a user as bot-admin (Can only be used by admins)
+Remove admin: Remove a bot-admin (Can only be used by admins)
+Get admin list: See which users have admin rights
+Get user rights: See which admin rights a user has
+Delete poll: Remove a poll from the poll-list'''
+    await interaction.response.send_message(help)
+
 @bot.tree.command(name="add_admin", description="Add a user as admin to the bot")
 @app_commands.describe(thing_to_say="Who do you want to give admin rights?")
 async def add_admin(interaction: discord.Interaction, thing_to_say: str):

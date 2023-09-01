@@ -3,6 +3,32 @@ import data_handling
 import discord
 
 # martijns code start hier
+
+async def poll_info(interaction: discord.Interaction, poll_name):
+    if poll_name == '':
+        await interaction.response.send_message(f"Needs poll name/id")
+    else:
+        if data_handling.doesPollExist(interaction, poll_name):
+            text = f"The poll `{poll_name}`"
+            data = data_handling.getData()
+            server_id = str(interaction.guild_id)
+            winnerDict = data_handling.calculateWinner(interaction, poll_name)
+            winnerDictFormatted = data_handling.winnerDictFormatted(interaction, winnerDict)
+            text += f"\nPoll was made by <@{data[server_id]['polls'][poll_name]['madeBy']}>"
+            if data[server_id]["polls"][poll_name]["phase"] == "adding":
+                text += f"\n📝items addable📝"
+            elif data[server_id]["polls"][poll_name]["phase"] == "voting":
+                text += f"\n🗳able to vote🗳"
+            else:
+                text += f"\n🔒vote is closed🔒"
+            if winnerDictFormatted == False:
+                text += "\nNo one has voted yet."
+            else:
+                text += f"\n{winnerDictFormatted}"
+            await interaction.response.send_message(text, ephemeral=True)
+        else:
+            await interaction.response.send_message(f"This poll does not exist.", ephemeral=True)
+
 # martijns code eindigt hier
 
 async def vote(interaction: discord.Interaction, gameName, points, chosenPoll):
