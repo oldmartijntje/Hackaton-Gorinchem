@@ -1,9 +1,72 @@
 import json
 import discord
 
+# martijns code start hier
+def doesPollExist(interaction: discord.Interaction, poll):
+    data = getData()
+    server_id = str(interaction.guild_id)
+    if server_id in data:
+        if poll in data[server_id]["polls"]:
+            return True
+        else:
+            return False
+    else:
+        return False
+    
+def calculateWinner(interaction: discord.Interaction, poll_name):
+    import operator
+    try:
+        server_id = str(interaction.guild_id)
+        data = getData()
+        winnerDict = {}
+        top3Dict = {"number1":"",
+                   "number1amount":0,
+                   "number2":"",
+                   "number2amount":0,
+                   "number3":"",
+                   "number3amount":0}
+        for voter in data[server_id]["polls"][poll_name]["votes"]:
+            for x in range(3):
+                if data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"] == "":
+                    pass
+                elif data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"] not in data[server_id]["polls"][poll_name]["gameList"]:
+                    pass
+                else:
+                    if data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"] not in winnerDict:
+                        winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] = x+1
+                    else:
+                        winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] += x+1
+                    if winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] > top3Dict["number1amount"]:
+                        top3Dict["number1"] = data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]
+                        top3Dict["number1amount"] = winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]]
+                    elif winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] > top3Dict["number2amount"]:
+                        top3Dict["number2"] = data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]
+                        top3Dict["number2amount"] = winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]]
+                    elif winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] > top3Dict["number3amount"]:
+                        top3Dict["number3"] = data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]
+                        top3Dict["number3amount"] = winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]]
+        print(winnerDict)
+        winnerDict = sorted(winnerDict.items(), key=operator.itemgetter(1))
+        return top3Dict
+
+    except Exception as e:
+        print(e)
+
+
+def winnerDictFormatted(interaction: discord.Interaction, top3Dict):
+    text = ""
+    for x in range(3):
+        if top3Dict[f"number{x+1}"] !="":
+            text += f"\n- {x+1}.`{top3Dict[f'number{x+1}']}` with {top3Dict[f'number{x+1}amount']} votes!"
+    if text != "":
+        return "Here are the results: " + text
+    else:
+        return False
+# martijns code eindigt hier
 
 def create_server(interaction: discord.Interaction):
     try:
+        serverName = interaction.guild
         server_id = str(interaction.guild_id)
         new_server_content = {
                 "admins": [],
@@ -11,6 +74,8 @@ def create_server(interaction: discord.Interaction):
                 "reference": {
                     "genshin": "gayshitInfect"
                 },
+                "serverName": serverName,
+                "directMessages": True
             }
         servers = getData()
         servers[server_id] = new_server_content
@@ -49,7 +114,13 @@ def get_poll_list(interaction: discord.Interaction):
             polls = data[str(interaction.guild_id)]["polls"]
             prettified_poll_list = ''
             for poll in polls:
-                prettified_poll_list += '\n- ' + poll
+                prettified_poll_list += '\n- `' + poll+'`'
+                if data[server_id]["polls"][poll]["phase"] == "adding":
+                    prettified_poll_list += f"    📝items addable📝"
+                elif data[server_id]["polls"][poll]["phase"] == "voting":
+                    prettified_poll_list += f"    🗳able to vote🗳"
+                else:
+                    prettified_poll_list += f"    🔒vote is closed🔒"
             if len(polls) == 0:
                 return 'There are currently no polls available.'
             else:
@@ -156,6 +227,10 @@ def addPollToData(interaction: discord.Interaction, name: str):
             saveData(server)
             return True
             
+# emiels code start hier
+# emiels code endigt hier
+
+
 def getData():
     checkIfExist()
     with open('data.json', 'r') as data:
