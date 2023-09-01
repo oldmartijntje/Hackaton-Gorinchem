@@ -104,3 +104,8 @@ async def createPoll(interaction: discord.Interaction, poll_name):
             await interaction.response.send_message(f"The poll {poll_name} already exists!")
     else:
         await interaction.response.send_message(f"You don't have the rights to create a poll!")
+
+# jurrians code start
+
+# jurrians code einde
+

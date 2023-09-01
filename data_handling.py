@@ -85,20 +85,26 @@ def create_server(interaction: discord.Interaction):
         print(e)
         return False
 
-def person_rights(interaction: discord.Interaction):
+def person_rights(interaction: discord.Interaction, thing_to_say):
     try:
-        user_is_serveradmin = interaction.user.guild_permissions.administrator
-        user_is_botadmin = False
-        server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
-        servers = getData()
-        if server_id in servers:
-            admins = servers[server_id]['admins']
-            user_is_botadmin = user_name in admins
-        return [user_is_serveradmin, user_is_botadmin]
+        if user_is_admin(interaction):
+            if thing_to_say.startswith('<@') and thing_to_say.endswith('>'):
+                user_id = thing_to_say[2:][:-1]
+            else:
+                return False, 'Please mention the user who you want to give admin rights.'
+            user_is_serveradmin = interaction.user.guild_permissions.administrator
+            user_is_botadmin = False
+            server_id = str(interaction.guild_id)
+            servers = getData()
+            if server_id in servers:
+                admins = servers[server_id]['admins']
+                user_is_botadmin = user_id in admins
+            return True, {"server_admin": user_is_serveradmin, "bot_admin": user_is_botadmin}
+        else:
+            return False, 'You do not have permission to view this content.'
     except Exception as e:
         print(e)
-        return False
+        return False, 'Something went wrong.'
 
 def get_poll_list(interaction: discord.Interaction):
     try:
@@ -130,7 +136,7 @@ def get_poll_list(interaction: discord.Interaction):
 def user_is_admin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
+        user_name = interaction.user.id
         user_is_serveradmin = interaction.user.guild_permissions.administrator
         with open('data.json', 'r') as servers:
             server = json.loads(servers.read())
@@ -151,45 +157,51 @@ def user_is_admin(interaction: discord.Interaction):
         return False
 
 
-def add_botadmin(interaction: discord.Interaction):
+def add_botadmin(interaction: discord.Interaction, thing_to_say):
     try:
+        if thing_to_say.startswith('<@') and thing_to_say.endswith('>'):
+            user_id = thing_to_say[2:][:-1]
+        else:
+            return 'Please mention the user who you want to give admin rights.'
         server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
         data = getData()
         if server_id in data:
             admins = data[server_id]['admins']
-            if user_name in admins:
-                return 'User is already admin'
+            if user_id in admins:
+                return 'User already had admin rights.'
             else:
-                admins.append(user_name)
+                admins.append(user_id)
                 saveData(data)
-                return True
+                return 'User now has admin rights.'
         else:
             create_server(interaction)
-            return True
+            return 'User now has admin rights.'
     except Exception as e:
         print(e)
-        return False
+        return 'Something went wrong.'
 
-def remove_botadmin(interaction: discord.Interaction):
+def remove_botadmin(interaction: discord.Interaction, thing_to_say):
     try:
+        if thing_to_say.startswith('<@') and thing_to_say.endswith('>'):
+            user_id = thing_to_say[2:][:-1]
+        else:
+            return 'Please mention the user whose admin rights you want to revoke.'
         server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
         data = getData()
         if server_id in data:
             admins = data[server_id]['admins']
-            if user_name in admins:
-                admins.remove(user_name)
+            if user_id in admins:
+                admins.remove(user_id)
                 saveData(data)
-                return True
+                return 'User no longer has admin rights.'
             else:
-                return 'User was not an admin'
+                return 'User had no admin rights.'
         else:
             create_server(interaction)
-            return True
+            return 'User no longer has admin rights.'
     except Exception as e:
         print(e)
-        return False
+        return 'Something went wrong.'
     
 def addPollToData(interaction: discord.Interaction, name: str):
     defaultPoll = {"votes": {
@@ -197,7 +209,7 @@ def addPollToData(interaction: discord.Interaction, name: str):
             "gameList": [       
             ],
             "phase": "adding"}
-    user_name = str(interaction.user.name)
+    user_name = str(interaction.user.id)
     defaultPoll["madeBy"] = user_name
     server_id = str(interaction.guild_id)
     server = getData()
@@ -234,3 +246,25 @@ def checkIfExist():
     if not os.path.isfile('data.json'):
         with open("data.json", mode="w") as data:
             data.write(json.dumps({}, indent=4))
+
+# jurrians code start
+def get_admin_list(interaction: discord.Interaction):
+    try:
+        server_id = str(interaction.guild_id)
+        data = getData()
+        if server_id in data:
+            admins = ''
+            admin_list = data[server_id]['admins']
+            if len(admin_list) == 0:
+                return 'No admins.'
+            for admin in admin_list:
+                admins += f'\n- <@{admin}>'
+            return admins
+        else:
+            return 'Admins couldn\'t be found.'
+    except:
+        return 'Something went wrong.'
+
+
+
+# jurrians code einde

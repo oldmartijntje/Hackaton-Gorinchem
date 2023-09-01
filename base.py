@@ -30,7 +30,8 @@ async def on_message(message):
 
 @bot.tree.command(name="say", description="Copies your text")
 @app_commands.describe(thing_to_say = "what should i say?")
-async def say(interaction: discord.Interaction, thing_to_say: str):    
+async def say(interaction: discord.Interaction, thing_to_say: str):
+    print(thing_to_say)
     await interaction.response.send_message(thing_to_say)
 
 @bot.tree.command(name="vote", description="Bring out your vote on a poll")
@@ -89,5 +90,32 @@ async def get_poll_list(interaction: discord.Interaction):
     poll_list = data_handling.get_poll_list(interaction)
     await interaction.response.send_message(poll_list)
 
+
+# jurrians code start
+@bot.tree.command(name="add_admin", description="Add a user as admin to the bot")
+@app_commands.describe(thing_to_say="Who do you want to give admin rights?")
+async def add_admin(interaction: discord.Interaction, thing_to_say: str):
+    message = data_handling.add_botadmin(interaction, thing_to_say)
+    await interaction.response.send_message(message)
+
+@bot.tree.command(name="remove_admin", description="Remove an admin from the bot")
+@app_commands.describe(thing_to_say="Whose admin rights do you want to revoke?")
+async def remove_admin(interaction: discord.Interaction, thing_to_say: str):
+    message = data_handling.remove_botadmin(interaction, thing_to_say)
+    await interaction.response.send_message(message)
+
+@bot.tree.command(name="get_admin_list", description="See which users have admin privileges")
+async def get_admin_list(interaction: discord.Interaction):
+    message = data_handling.get_admin_list(interaction)
+    await interaction.response.send_message(message)
+
+@bot.tree.command(name="get_user_rights", description="See which admin rights a user has.")
+async def get_user_rights(interaction: discord.Interaction, thing_to_say: str):
+    condition, response = data_handling.person_rights(interaction, thing_to_say)
+    if condition:
+        response = f'- Server Admin: {response["server_admin"]}\n- Bot Admin: {response["bot_admin"]}'
+    await interaction.response.send_message(response)
+
+# jurrians code einde
 
 bot.run(token=key)
