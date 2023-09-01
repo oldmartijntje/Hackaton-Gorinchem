@@ -190,6 +190,23 @@ def get_admin_list(interaction: discord.Interaction):
     except:
         return 'Something went wrong.'
 
-
-
+def delete_poll(interaction: discord.Interaction, thing_to_say):
+    try:
+        if user_is_admin(interaction):
+            poll_name = thing_to_say
+            data = getData()
+            server_id = str(interaction.guild_id)
+            if server_id in data:
+                polls = data[server_id]['polls']
+                if thing_to_say in polls:
+                    del polls[poll_name]
+                    saveData(data)
+                else:
+                    return 'Poll does not exist.'
+            return f'Successfully deleted poll {poll_name}!'
+        else:
+            return 'You do not have permission to delete this poll.'
+    except Exception as e:
+        print(e)
+        return 'Something went wrong.'
 # jurrians code einde

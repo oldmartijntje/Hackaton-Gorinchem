@@ -85,6 +85,11 @@ async def get_user_rights(interaction: discord.Interaction, thing_to_say: str):
         response = f'- Server Admin: {response["server_admin"]}\n- Bot Admin: {response["bot_admin"]}'
     await interaction.response.send_message(response)
 
+@bot.tree.command(name="delete_poll", description="Remove a poll from the poll-list.")
+@app_commands.describe(thing_to_say="Which poll do you want to delete?")
+async def delete_poll(interaction: discord.Interaction, thing_to_say: str):
+    message = data_handling.delete_poll(interaction, thing_to_say)
+    await interaction.response.send_message(message)
 # jurrians code einde
 
 bot.run(token=key)
