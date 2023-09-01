@@ -73,6 +73,11 @@ async def remove_admin(interaction: discord.Interaction, thing_to_say: str):
     message = data_handling.remove_botadmin(interaction, thing_to_say)
     await interaction.response.send_message(message)
 
+@bot.tree.command(name="get_admin_list", description="See which users have admin privileges")
+async def get_admin_list(interaction: discord.Interaction):
+    message = data_handling.get_admin_list(interaction)
+    await interaction.response.send_message(message)
+
 # jurrians code einde
 
 bot.run(token=key)
