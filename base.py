@@ -63,7 +63,7 @@ async def create(interaction: discord.Interaction, detection: str, replacement:s
 @bot.tree.command(name="remove_reference", description="Deletes refference from the list")
 @app_commands.describe(detection = "Detected word")
 async def remove(interaction: discord.Interaction, detection: str):
-    await admin.remove_reference_reference(interaction, detection)
+    await admin.remove_reference(interaction, detection)
 
 @bot.tree.command(name="references_list", description="Shows you the list of references")
 async def showList(interaction: discord.Interaction):
