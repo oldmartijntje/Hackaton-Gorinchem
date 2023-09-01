@@ -25,7 +25,7 @@ def person_rights(interaction: discord.Interaction):
         user_is_serveradmin = interaction.user.guild_permissions.administrator
         user_is_botadmin = False
         server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
+        user_name = interaction.user.id
         servers = getData()
         if server_id in servers:
             admins = servers[server_id]['admins']
@@ -59,7 +59,7 @@ def get_poll_list(interaction: discord.Interaction):
 def user_is_admin(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
-        user_name = interaction.user.name
+        user_name = interaction.user.id
         user_is_serveradmin = interaction.user.guild_permissions.administrator
         with open('data.json', 'r') as servers:
             server = json.loads(servers.read())
@@ -132,7 +132,7 @@ def addPollToData(interaction: discord.Interaction, name: str):
             "gameList": [       
             ],
             "phase": "adding"}
-    user_name = str(interaction.user.name)
+    user_name = str(interaction.user.id)
     defaultPoll["madeBy"] = user_name
     server_id = str(interaction.guild_id)
     server = getData()
@@ -167,5 +167,25 @@ def checkIfExist():
             data.write(json.dumps({}, indent=4))
 
 # jurrians code start
+def get_admin_list(interaction: discord.Interaction):
+    try:
+        server_id = str(interaction.guild_id)
+        data = getData()
+        print(server_id)
+        print(data)
+        if server_id in data:
+            admins = ''
+            admin_list = data[server_id]['admins']
+            if len(admin_list) == 0:
+                return 'No admins.'
+            for admin in admin_list:
+                admins += f'\n- <@{admin}>'
+            return admins
+        else:
+            return 'Admins couldn\'t be found.'
+    except:
+        return 'Something went wrong.'
+
+
 
 # jurrians code einde
