@@ -57,8 +57,17 @@ async def startVote(interaction: discord.Interaction, vote_name: str = ''):
 # emiels code hier
 @bot.tree.command(name="create_reference", description="Adds refference to the list")
 @app_commands.describe(detection = "Detected word", replacement = "Replacement")
-async def vote(interaction: discord.Interaction, detection: str, replacement:str):
+async def create(interaction: discord.Interaction, detection: str, replacement:str):
     await admin.add_reference(interaction, detection, replacement)
+
+@bot.tree.command(name="remove_reference", description="Deletes refference from the list")
+@app_commands.describe(detection = "Detected word")
+async def remove(interaction: discord.Interaction, detection: str):
+    await admin.remove_reference_reference(interaction, detection)
+
+@bot.tree.command(name="references_list", description="Shows you the list of references")
+async def showList(interaction: discord.Interaction):
+    await admin.display_references(interaction)
 
 # emiels code eindigt hier
 
