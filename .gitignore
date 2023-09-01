@@ -6,6 +6,7 @@ __pycache__/
 # own
 secrets.txt
 .idea
+data.json
 
 # C extensions
 *.so
