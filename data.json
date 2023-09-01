@@ -1,6 +1,8 @@
 {
     "1041027064620388484": {
-        "admins": [],
+        "admins": [
+            "946358912318337026"
+        ],
         "polls": {
             "50e3e846-81a0-4fe3-8567-5cc641c32285": {
                 "votes": {
@@ -15,6 +17,11 @@
                         "3points": "Super Mario Galaxy"
                     },
                     "onlyfans.nl": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": ""
+                    },
+                    "417406922384211969": {
                         "1points": "",
                         "2points": "",
                         "3points": ""
@@ -67,10 +74,25 @@
                 "gameList": [],
                 "phase": "closed",
                 "madeBy": "417406922384211969"
+            },
+            "a": {
+                "votes": {
+                    "417406922384211969": {
+                        "1points": "",
+                        "2points": "",
+                        "3points": ""
+                    }
+                },
+                "gameList": [
+                    "gayshitinfect"
+                ],
+                "phase": "adding",
+                "madeBy": "417406922384211969"
             }
         },
         "reference": {
-            "genshin": "gayshitInfect"
+            "genshin": "gayshitInfect",
+            "fortnite": "minecraft"
         }
     }
 }
