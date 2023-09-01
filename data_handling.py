@@ -20,20 +20,26 @@ def create_server(interaction: discord.Interaction):
         print(e)
         return False
 
-def person_rights(interaction: discord.Interaction):
+def person_rights(interaction: discord.Interaction, thing_to_say):
     try:
-        user_is_serveradmin = interaction.user.guild_permissions.administrator
-        user_is_botadmin = False
-        server_id = str(interaction.guild_id)
-        user_name = interaction.user.id
-        servers = getData()
-        if server_id in servers:
-            admins = servers[server_id]['admins']
-            user_is_botadmin = user_name in admins
-        return [user_is_serveradmin, user_is_botadmin]
+        if user_is_admin(interaction):
+            if thing_to_say.startswith('<@') and thing_to_say.endswith('>'):
+                user_id = thing_to_say[2:][:-1]
+            else:
+                return False, 'Please mention the user who you want to give admin rights.'
+            user_is_serveradmin = interaction.user.guild_permissions.administrator
+            user_is_botadmin = False
+            server_id = str(interaction.guild_id)
+            servers = getData()
+            if server_id in servers:
+                admins = servers[server_id]['admins']
+                user_is_botadmin = user_id in admins
+            return True, {"server_admin": user_is_serveradmin, "bot_admin": user_is_botadmin}
+        else:
+            return False, 'You do not have permission to view this content.'
     except Exception as e:
         print(e)
-        return False
+        return False, 'Something went wrong.'
 
 def get_poll_list(interaction: discord.Interaction):
     try:
@@ -171,8 +177,6 @@ def get_admin_list(interaction: discord.Interaction):
     try:
         server_id = str(interaction.guild_id)
         data = getData()
-        print(server_id)
-        print(data)
         if server_id in data:
             admins = ''
             admin_list = data[server_id]['admins']

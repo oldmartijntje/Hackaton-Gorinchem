@@ -78,6 +78,13 @@ async def get_admin_list(interaction: discord.Interaction):
     message = data_handling.get_admin_list(interaction)
     await interaction.response.send_message(message)
 
+@bot.tree.command(name="get_user_rights", description="See which admin rights a user has.")
+async def get_user_rights(interaction: discord.Interaction, thing_to_say: str):
+    condition, response = data_handling.person_rights(interaction, thing_to_say)
+    if condition:
+        response = f'- Server Admin: {response["server_admin"]}\n- Bot Admin: {response["bot_admin"]}'
+    await interaction.response.send_message(response)
+
 # jurrians code einde
 
 bot.run(token=key)
