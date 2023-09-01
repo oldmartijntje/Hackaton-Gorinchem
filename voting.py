@@ -98,6 +98,19 @@ def checkDuplicateGames(interaction: discord.Integration, votes, gameName):
         return votes
     
 # emiels code start hier
+
+async def displayVoteableGames(interaction: discord.Interaction, pollName):
+    data = data_handling.getData()
+    if pollName in data[str(interaction.guild_id)]["polls"]:
+        poll = data[str(interaction.guild_id)]["polls"][pollName]
+        gamesList = poll["gameList"]
+        response = f"Games in {pollName}: \n"
+        for game in gamesList:
+            response = f"{response}- **{game}**\n"
+        await interaction.response.send_message(response,ephemeral=True)
+    else:
+        await interaction.response.send_message("This poll does not exist, please check if you made any typo's and try again.",ephemeral=True)
+
 # emiels code eindigt hier
 
 async def getMyVotes(interaction: discord.Interaction, chosenPoll):

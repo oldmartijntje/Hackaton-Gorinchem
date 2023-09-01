@@ -88,6 +88,10 @@ async def remove(interaction: discord.Interaction, detection: str):
 async def showList(interaction: discord.Interaction):
     await admin.display_references(interaction)
 
+@bot.tree.command(name="show_games", description="Shows you the list of voted games in a poll.")
+async def showGamesList(interaction: discord.Interaction, poll:str):
+    await voting.displayVoteableGames(interaction, poll)
+
 # emiels code eindigt hier
 
 @bot.tree.command(name="get_poll_list", description="Get a list of all active polls")
