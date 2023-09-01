@@ -7,19 +7,22 @@ import random
 
 deniedList = ["https://tenor.com/view/request-denied-colonel-sharp-gi-joe-a-real-american-hero-the-synthoid-conspiracy-deny-gif-17529846", "https://tenor.com/view/nope-gif-18506271", "https://tenor.com/view/no-way-dude-no-oh-bugs-bunny-bugs-gif-22941840", "https://tenor.com/view/smg4-mission-failed-successfully-mission-failed-mario-luigi-gif-26027979", "You don't have admin permissions."]
 async def add_reference(interaction: discord.Interaction, keyword, replacement):
-    if data_handling.user_is_admin(interaction):
-        data = data_handling.getData()
-        if str(interaction.guild_id) in data:
-            if keyword != replacement:
-                data[str(interaction.guild_id)]["reference"][str(keyword).lower()] = str(replacement)
-                await interaction.response.send_message(f"**`{keyword}`** will now be replaced with **`{replacement}`**!", ephemeral=True)
-                data_handling.saveData(data)
+    try:
+        if data_handling.user_is_admin(interaction):
+            data = data_handling.getData()
+            if str(interaction.guild_id) in data:
+                if keyword != replacement:
+                    data[str(interaction.guild_id)]["reference"][str(keyword).lower()] = str(replacement)
+                    await interaction.response.send_message(f"**`{keyword}`** will now be replaced with **`{replacement}`**!", ephemeral=True)
+                    data_handling.saveData(data)
+                else:
+                    await interaction.response.send_message("Hey there buddy, the reference cannot be the same as the replacement :wink:", ephemeral=True)
             else:
-                await interaction.response.send_message("Hey there buddy, the reference cannot be the same as the replacement :wink:", ephemeral=True)
+                await interaction.response.send_message("This server is not yet registered, register it by creating a poll.", ephemeral=True)
         else:
-            await interaction.response.send_message("This server is not yet registered, register it by creating a poll.")
-    else:
-        await interaction.response.send_message(random.choice(deniedList))
+            await interaction.response.send_message(random.choice(deniedList), ephemeral=True)
+    except:
+        interaction.response.send_message("Something went wrong.", ephemeral=True)
 
 async def remove_reference(interaction: discord.Interaction, keyword):
     if data_handling.user_is_admin(interaction):
@@ -32,9 +35,9 @@ async def remove_reference(interaction: discord.Interaction, keyword):
             else:
                 await interaction.response.send_message(f"{keyword} is not a valid reference, check if you made any typos and try again.", ephemeral=True)
         else:
-            await interaction.response.send_message("This server does not have any references.")
+            await interaction.response.send_message("This server does not have any references.", ephemeral=True)
     else:
-        await interaction.response.send_message(random.choice(deniedList))
+        await interaction.response.send_message(random.choice(deniedList), ephemeral=True)
 
 async def display_references(interaction: discord.Interaction):
     data = data_handling.getData()
