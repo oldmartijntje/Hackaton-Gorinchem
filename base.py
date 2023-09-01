@@ -43,6 +43,19 @@ async def vote(interaction: discord.Interaction, vote: str, score:int, poll:str)
 async def get_votes(interaction: discord.Interaction, chosen_poll: str = ""):
     await voting.getMyVotes(interaction, chosen_poll)
     
+# martijns code start hier
+@bot.tree.command(name="close_poll", description="Finish the poll and get the results.")
+@app_commands.describe(poll = "Poll name")
+async def get_poll_list(interaction: discord.Interaction, poll: str):
+    await admin.endPoll(interaction, poll)
+
+@bot.tree.command(name="start_voting", description="Change it to voting phase.")
+@app_commands.describe(poll = "Poll name")
+async def get_poll_list(interaction: discord.Interaction, poll: str):
+    await admin.endPoll(interaction, poll)
+
+# martijns code eindigt hier
+
 @bot.tree.command(name="test_data_handling", description="Testing data handling functions")
 @app_commands.describe(thing_to_say="what should i say?")
 async def test_data_handling(interaction: discord.Interaction, thing_to_say: str):
@@ -50,9 +63,9 @@ async def test_data_handling(interaction: discord.Interaction, thing_to_say: str
     await interaction.response.send_message(thing_to_say)
     
 @bot.tree.command(name="start_poll", description="Start a poll.")
-@app_commands.describe(vote_name = "What is the name of the vote?")
-async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
-    await admin.test(interaction, vote_name)
+@app_commands.describe(poll_name = "What is the name of the vote?")
+async def startVote(interaction: discord.Interaction, poll_name: str = ''):  
+    await admin.createPoll(interaction, poll_name)
 
 # emiels code hier
 @bot.tree.command(name="create_reference", description="Adds refference to the list")

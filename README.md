@@ -18,11 +18,11 @@ the keys are always lowercase, value does not need to be lowercase
 je Vote op een Poll. Dus een vote is wat een persoon kiest. Een poll is het ding waar je op kan voten. Haal t niet door de war.
 
 ## todo
-- in de getpolllist `command` kijken naar de state van elke poll, is ie al geclosed bijvoorbeeld? en of jouw stem daar ook tussen zit.
-- `command` om poll te verwijderen
-- `command` om poll informatie te krijgen, wie heeft gemaakt, hoeveel votes, waarop is gevote? Wat is de current winner.
-- `command` om poll naar stage `closed` te zetten
-- `command` om poll naar stage `voting` te zetten
+-
+    - `command` help!
+    - `command` om poll te verwijderen
+    - `command` om poll informatie te krijgen, wie heeft gemaakt, hoeveel votes, waarop is gevote? Wat is de current winner.
+    - `command` om poll naar stage `voting` te zetten
 - delete admin `command`
 - add admin `command` (using the already made function)
     - delete references `command`

@@ -2,6 +2,31 @@ import uuid
 import discord
 import data_handling 
 
+# martijns code start hier
+async def endPoll(interaction: discord.Interaction, poll_name):
+    if poll_name == '':
+        await interaction.response.send_message(f"Needs poll name/id")
+    elif data_handling.user_is_admin(interaction):
+        if data_handling.doesPollExist(interaction, poll_name):
+            if data[server_id]["polls"][poll_name]["phase"] == "closed":
+                await interaction.response.send_message(f"This poll is already closed.")
+            else:
+                data = data_handling.getData()
+                server_id = str(interaction.guild_id)
+                data[server_id]["polls"][poll_name]["phase"] = "closed"
+                data_handling.saveData(data)
+                winnerDict = data_handling.calculateWinner(interaction, poll_name)
+                winnerDictFormatted = data_handling.winnerDictFormatted(interaction, winnerDict)
+                await interaction.response.send_message(winnerDictFormatted)
+        else:
+            await interaction.response.send_message(f"This poll does not exist.")
+        
+    else:
+        await interaction.response.send_message(f"You don't have the rights to edit a poll!")
+# martijns code eindigt hier
+
+
+
 # emiels code start hier
 import random
 
@@ -48,13 +73,13 @@ async def display_references(interaction: discord.Interaction):
     await interaction.response.send_message(response, ephemeral=True)
 # emiels code eindigt hier
 
-async def test(interaction: discord.Interaction, vote_name): 
-    if vote_name == '':
-        vote_name = str(uuid.uuid4())
+async def createPoll(interaction: discord.Interaction, poll_name): 
+    if poll_name == '':
+        poll_name = str(uuid.uuid4())
     if data_handling.user_is_admin(interaction):
-        if data_handling.addPollToData(interaction, vote_name):
-            await interaction.response.send_message(f"Succesfully created poll {vote_name}!")
+        if data_handling.addPollToData(interaction, poll_name):
+            await interaction.response.send_message(f"Succesfully created poll `{poll_name}`!")
         else:
-            await interaction.response.send_message(f"The poll {vote_name} already exists!")
+            await interaction.response.send_message(f"The poll {poll_name} already exists!")
     else:
         await interaction.response.send_message(f"You don't have the rights to create a poll!")

@@ -2,11 +2,15 @@ import json
 import data_handling
 import discord
 
+# martijns code start hier
+# martijns code eindigt hier
+
 async def vote(interaction: discord.Interaction, gameName, points, chosenPoll):
     dataDict = data_handling.getData()
     if str(interaction.guild_id) in dataDict:
         if gameName.lower() in dataDict[f"{interaction.guild_id}"]["reference"]:
             gameName = dataDict[f"{interaction.guild_id}"]["reference"][gameName]
+        gameName = gameName.lower()
         if points < 4 and points > 0:
             if chosenPoll in dataDict[f"{interaction.guild_id}"]["polls"]:
                 data = data_handling.getData()
