@@ -36,7 +36,7 @@ async def say(interaction: discord.Interaction, thing_to_say: str):
 
 @bot.tree.command(name="vote", description="Bring out your vote on a poll")
 @app_commands.describe(poll = "poll", vote = "game", score = "your points")
-async def vote(interaction: discord.Interaction, vote: str, score:int, poll:str):
+async def vote(interaction: discord.Interaction, vote: str, poll:str, score:int=3):
     await voting.vote(interaction, gameName=vote, points=score, chosenPoll=poll)
 
 @bot.tree.command(name="get_votes", description="See what you have voted for on a specific poll or server")
@@ -47,13 +47,13 @@ async def get_votes(interaction: discord.Interaction, chosen_poll: str = ""):
 # martijns code start hier
 @bot.tree.command(name="close_poll", description="Finish the poll and get the results.")
 @app_commands.describe(poll = "Poll name")
-async def get_poll_list(interaction: discord.Interaction, poll: str):
+async def close_poll(interaction: discord.Interaction, poll: str):
     await admin.endPoll(interaction, poll)
 
 @bot.tree.command(name="start_voting", description="Change it to voting phase.")
 @app_commands.describe(poll = "Poll name")
-async def get_poll_list(interaction: discord.Interaction, poll: str):
-    await admin.endPoll(interaction, poll)
+async def start_voting(interaction: discord.Interaction, poll: str):
+    await admin.addingPhase(interaction, poll)
 
 # martijns code eindigt hier
 

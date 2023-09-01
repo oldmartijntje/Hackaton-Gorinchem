@@ -45,7 +45,6 @@ def calculateWinner(interaction: discord.Interaction, poll_name):
                     elif winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]] > top3Dict["number3amount"]:
                         top3Dict["number3"] = data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]
                         top3Dict["number3amount"] = winnerDict[data[server_id]["polls"][poll_name]["votes"][voter][f"{x+1}points"]]
-        print(winnerDict)
         winnerDict = sorted(winnerDict.items(), key=operator.itemgetter(1))
         return top3Dict
 

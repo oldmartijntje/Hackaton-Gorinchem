@@ -8,16 +8,21 @@ async def endPoll(interaction: discord.Interaction, poll_name):
         await interaction.response.send_message(f"Needs poll name/id")
     elif data_handling.user_is_admin(interaction):
         if data_handling.doesPollExist(interaction, poll_name):
+            data = data_handling.getData()
+            server_id = str(interaction.guild_id)
             if data[server_id]["polls"][poll_name]["phase"] == "closed":
                 await interaction.response.send_message(f"This poll is already closed.")
+            elif data[server_id]["polls"][poll_name]["phase"] == "adding":
+                await interaction.response.send_message(f"You can't skip the voting pahse.")
             else:
-                data = data_handling.getData()
-                server_id = str(interaction.guild_id)
                 data[server_id]["polls"][poll_name]["phase"] = "closed"
                 data_handling.saveData(data)
                 winnerDict = data_handling.calculateWinner(interaction, poll_name)
                 winnerDictFormatted = data_handling.winnerDictFormatted(interaction, winnerDict)
-                await interaction.response.send_message(winnerDictFormatted)
+                if winnerDictFormatted == False:
+                    await interaction.response.send_message("It's now closed. \nThere were no votes on this poll!")
+                else:
+                    await interaction.response.send_message(f"It's now closed. \n{winnerDictFormatted}")
         else:
             await interaction.response.send_message(f"This poll does not exist.")
         
@@ -29,16 +34,16 @@ async def addingPhase(interaction: discord.Interaction, poll_name):
         await interaction.response.send_message(f"Needs poll name/id")
     elif data_handling.user_is_admin(interaction):
         if data_handling.doesPollExist(interaction, poll_name):
+            data = data_handling.getData()
+            server_id = str(interaction.guild_id)
             if data[server_id]["polls"][poll_name]["phase"] == "closed":
                 await interaction.response.send_message(f"This poll is already closed.")
+            elif data[server_id]["polls"][poll_name]["phase"] == "voting":
+                await interaction.response.send_message(f"This poll is already in the voting phase.")
             else:
-                data = data_handling.getData()
-                server_id = str(interaction.guild_id)
-                data[server_id]["polls"][poll_name]["phase"] = "closed"
+                data[server_id]["polls"][poll_name]["phase"] = "voting"
                 data_handling.saveData(data)
-                winnerDict = data_handling.calculateWinner(interaction, poll_name)
-                winnerDictFormatted = data_handling.winnerDictFormatted(interaction, winnerDict)
-                await interaction.response.send_message(winnerDictFormatted)
+                await interaction.response.send_message(f"Succesfully set vote into the voting phase.")
         else:
             await interaction.response.send_message(f"This poll does not exist.")
         
