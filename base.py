@@ -54,9 +54,18 @@ async def test_data_handling(interaction: discord.Interaction, thing_to_say: str
 async def startVote(interaction: discord.Interaction, vote_name: str = ''):  
     await admin.test(interaction, vote_name)
 
+# emiels code hier
+@bot.tree.command(name="create_reference", description="Adds refference to the list")
+@app_commands.describe(detection = "Detected word", replacement = "Replacement")
+async def vote(interaction: discord.Interaction, detection: str, replacement:str):
+    await admin.add_reference(interaction, detection, replacement)
+
+# emiels code eindigt hier
+
 @bot.tree.command(name="get_poll_list", description="Get a list of all active polls")
 async def get_poll_list(interaction: discord.Interaction):
     poll_list = data_handling.get_poll_list(interaction)
     await interaction.response.send_message(poll_list)
+
 
 bot.run(token=key)

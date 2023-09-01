@@ -144,6 +144,10 @@ def addPollToData(interaction: discord.Interaction, name: str):
             saveData(server)
             return True
             
+# emiels code start hier
+# emiels code endigt hier
+
+
 def getData():
     checkIfExist()
     with open('data.json', 'r') as data:
