@@ -65,7 +65,7 @@ def winnerDictFormatted(interaction: discord.Interaction, top3Dict):
 
 def create_server(interaction: discord.Interaction):
     try:
-        serverName = interaction.guild
+        serverName = interaction.guild.name
         server_id = str(interaction.guild_id)
         new_server_content = {
                 "admins": [],
