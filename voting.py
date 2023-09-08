@@ -55,7 +55,7 @@ async def vote(interaction: discord.Interaction, gameName, points, chosenPoll):
                     await interaction.response.send_message(f"Sorry <@{interaction.user.id}>, but voting on this poll has already been finished.")
                 
                 if not str(interaction.user.id) in votes:
-                    votes[interaction.user.id] = {"1points": "", "2points": "", "3points": ""}
+                    votes[str(interaction.user.id)] = {"1points": "", "2points": "", "3points": ""}
 
                 data_handling.saveData(data)
             else:
@@ -72,27 +72,27 @@ async def vote(interaction: discord.Interaction, gameName, points, chosenPoll):
 async def addVotingToUserAndGiveFeedback(interaction: discord.Integration, votes, gameName, points, chosenPoll):
     votes = checkDuplicateGames(interaction, votes, gameName)
     if not str(interaction.user.id) in votes:
-        votes[interaction.user.id] = {"1points": "", "2points": "", "3points": ""}
-    if votes[interaction.user.id][f"{points}points"] != "":
+        votes[str(interaction.user.id)] = {"1points": "", "2points": "", "3points": ""}
+    if votes[str(interaction.user.id)][f"{points}points"] != "":
         votes = checkBeforeReplacing(interaction, votes, points)
-    votes[interaction.user.id][f"{points}points"] = gameName
+    votes[str(interaction.user.id)][f"{points}points"] = gameName
     if points > 1:
         await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** points, in **{chosenPoll}**.", ephemeral=True)
     else:
         await interaction.response.send_message(f"<@{interaction.user.id}> Successfully voted for **{gameName}** for **{points}** point, in **{chosenPoll}**.", ephemeral=True)
 
 def checkBeforeReplacing(interaction: discord.Integration, votes, points):
-    if points > 1 and votes[interaction.user.id][f"{points-1}points"] == "":
-        votes[interaction.user.id][f"{points-1}points"] = votes[interaction.user.id][f"{points}points"]
-    elif points > 2 and votes[interaction.user.id][f"{points-2}points"] == "":
-        votes[interaction.user.id][f"{points-2}points"] = votes[interaction.user.id][f"{points}points"]
+    if points > 1 and votes[str(interaction.user.id)][f"{points-1}points"] == "":
+        votes[str(interaction.user.id)][f"{points-1}points"] = votes[str(interaction.user.id)][f"{points}points"]
+    elif points > 2 and votes[str(interaction.user.id)][f"{points-2}points"] == "":
+        votes[str(interaction.user.id)][f"{points-2}points"] = votes[str(interaction.user.id)][f"{points}points"]
     return votes
 
 def checkDuplicateGames(interaction: discord.Integration, votes, gameName):
-    if interaction.user.id in votes:
-        for item in list(votes[interaction.user.id].keys()):
-            if votes[interaction.user.id][item] == gameName:
-                votes[interaction.user.id][item] = ""
+    if str(interaction.user.id) in votes:
+        for item in list(votes[str(interaction.user.id)].keys()):
+            if votes[str(interaction.user.id)][item] == gameName:
+                votes[str(interaction.user.id)][item] = ""
         return votes
     else: 
         return votes
@@ -116,7 +116,7 @@ async def displayVoteableGames(interaction: discord.Interaction, pollName):
 async def getMyVotes(interaction: discord.Interaction, chosenPoll):
     server_id = str(interaction.guild_id)
     data = data_handling.getData()
-    username = interaction.user.id
+    username = str(interaction.user.id)
     if chosenPoll == "":
         if server_id not in data:
             data_handling.create_server(interaction)
